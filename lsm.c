@@ -40,15 +40,47 @@ void dispData(struct dataset data[], int dataNumber)
 
 void lsm(struct dataset data[], int dataNumber)
 {
+  int i;
+  int left[2][2];
+  int invert[2][2];
+  int right[2][2];
+  double xsum =0;
+  double dxsum =0;
+  double ysum =0;
+  double xysum =0;
+
   dispData(data, dataNumber);
 
   printf("\n");
-  printf("(%lf, %lf)\n", data[0].x, data[0].y);
-  printf("(%lf, %lf)\n", data[1].x, data[1].y);
-  printf("(%lf, %lf)\n", data[2].x, data[2].y);
 
-   
+  for(i=0; i<dataNumber; i++) {
+    xsum += data[i].x;
+  }
 
+  for(i=0; i<dataNumber; i++) {
+    dxsum += data[i].x * data[i].x;
+  }
+
+  for(i=0; i<dataNumber; i++) {
+    xysum += data[i].x * data[i].y;
+  }
+  for(i=0; i<dataNumber; i++) {
+    ysum += data[i].y;
+  }
+
+  double under = (xsum * xsum) - (dxsum * dataNumber);
+
+  //double a = dxsum * xysum + xsum * ysum;
+  double a = dataNumber * xysum + -xsum * ysum;
+  //double b = xsum * xysum + dataNumber * ysum;
+  double b = -xsum * xysum + dxsum * ysum;
+
+  double aa = a / under;
+  double bb = b / under;
+
+  printf("(%lf %lf)(a) = (%lf)\n",dxsum,xsum,xysum);
+  printf("(%lf %d)(b) = (%lf)\n",xsum,dataNumber,ysum);
+  printf("\n%lf %lf\n",aa,bb);
 }
 
 
