@@ -41,9 +41,6 @@ void dispData(struct dataset data[], int dataNumber)
 void lsm(struct dataset data[], int dataNumber)
 {
   int i;
-  int left[2][2];
-  int invert[2][2];
-  int right[2][2];
   double xsum =0;
   double dxsum =0;
   double ysum =0;
@@ -68,12 +65,12 @@ void lsm(struct dataset data[], int dataNumber)
     ysum += data[i].y;
   }
 
-  double under = (xsum * xsum) - (dxsum * dataNumber);
+  double under = (dxsum * dataNumber) - (xsum * xsum);
 
   //double a = dxsum * xysum + xsum * ysum;
-  double a = dataNumber * xysum + -xsum * ysum;
+  double a = dataNumber * xysum + (-xsum) * ysum;
   //double b = xsum * xysum + dataNumber * ysum;
-  double b = -xsum * xysum + dxsum * ysum;
+  double b = (-xsum) * xysum + dxsum * ysum;
 
   double aa = a / under;
   double bb = b / under;
